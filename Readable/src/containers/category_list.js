@@ -27,7 +27,7 @@ class CategoryList extends Component{
 
 			<ul className='list-group col-sm-4'>
 		      	{this.renderList()}
-		      	{console.log(this.props.categories)}
+		      	{console.log(this.props.categories[0])}
 		     </ul>
 
 
