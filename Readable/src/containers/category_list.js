@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getCategories} from '../actions/index';
+import {getCategories, setActive} from '../actions/index';
 import {bindActionCreators} from 'redux';
 
 
@@ -10,24 +10,29 @@ class CategoryList extends Component{
 
 
 	componentDidMount(){
-		this.props.getCategories()
+		this.props.getCats()
+	}
+
+	handleClick(category){
+		console.log(category);
+		this.props.setAct(category);
+
 	}
 
 	 renderList(){
 		return this.props.categories.map((category)=>{	
 			return(
-
-				<li key={category.name} className="list-group-item">{category.name}</li>
+				<li key={category.name} onClick={()=>this.handleClick(category)} className="list-group-item">{category.name}</li>
 			)
 		})
 	}
 
 	render(){
 		return(
-
 			<ul className='list-group col-sm-4'>
 		      	{this.renderList()}
-		      	{console.log(this.props.categories[0])}
+		      	{console.log("categories", this.props.categories)}	
+		      	{console.log(this.props.active)}
 		     </ul>
 
 
@@ -43,11 +48,14 @@ class CategoryList extends Component{
 
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators( {getCategories}, dispatch);
+	return{
+		getCats: () =>{dispatch(getCategories())},
+		setAct: (category) => {dispatch(setActive(category))}
+	}
 }
 
 const mapStateToProps = (state) =>{
-	return {categories: state.categories};
+	return {categories: state.categories, active: state.active};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
