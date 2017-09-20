@@ -1,10 +1,10 @@
-import {SET_ACTIVE} from '../actions/index';
+import {ACTIVE_CATEGORY} from '../actions/index';
 
 
 
 export default function(state = null, action){
 	switch(action.type){
-		case SET_ACTIVE:
+		case ACTIVE_CATEGORY:
 		 return action.payload;
 	}
 	

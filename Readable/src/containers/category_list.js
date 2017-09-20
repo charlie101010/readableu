@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getCategories, setActive} from '../actions/index';
-import {bindActionCreators} from 'redux';
+import {getCategories, setActiveCategory} from '../actions/index';
+import {Link} from 'react-router-dom';
 
 
 
@@ -10,7 +10,7 @@ class CategoryList extends Component{
 
 
 	componentDidMount(){
-		this.props.getCats()
+		this.props.getCats();
 	}
 
 	handleClick(category){
@@ -29,12 +29,17 @@ class CategoryList extends Component{
 
 	render(){
 		return(
+		<div>
+			<h2> Click on a Category to Filter Posts </h2>
+			<div className="btn btn-primary" onClick={()=>this.handleClick(null)}>Show Posts from All Categories</div>
 			<ul className='list-group col-sm-4'>
 		      	{this.renderList()}
 		      	{console.log("categories", this.props.categories)}	
-		      	{console.log(this.props.active)}
+		      	{console.log("ActiveCategory", this.props.activeCategory)}
+		      	{console.log("ActivePost", this.props.activePost)}
 		     </ul>
-
+		   	
+		</div>     
 
 
 			)
@@ -49,13 +54,14 @@ class CategoryList extends Component{
 
 const mapDispatchToProps = (dispatch) => {
 	return{
-		getCats: () =>{dispatch(getCategories())},
-		setAct: (category) => {dispatch(setActive(category))}
+		getCats: () => {dispatch(getCategories())},
+		setAct: (category) => {dispatch(setActiveCategory(category))},
+		setActivePost: (post) => {dispatch(setActivePost(post))}
 	}
 }
 
 const mapStateToProps = (state) =>{
-	return {categories: state.categories, active: state.active};
+	return {categories: state.categories, activeCategory: state.active, activePost: state.setActivePost};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

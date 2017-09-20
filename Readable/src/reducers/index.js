@@ -1,13 +1,18 @@
 import { combineReducers } from 'redux';
 import categoryReducer from './reducer_categories';
 import postsReducer from './reducer_posts';
-import activeReducer from './reducer_active';
+import activeCategoryReducer from './reducer_active_category';
+import { reducer as formReducer } from 'redux-form';
+import commentsReducer from './reducer_comments';
 
 
 const rootReducer = combineReducers({
   categories: categoryReducer,
   posts: postsReducer,
-  active: activeReducer
+  setActiveCategory: activeCategoryReducer,
+  form: formReducer,
+  comments: commentsReducer
+
 });
 
 export default rootReducer;
