@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { createPost, getCategories} from '../actions/index';
 import uuid from 'uuid';
@@ -11,7 +11,26 @@ class PostsNew extends Component{
 
 	componentDidMount(){
 		this.props.getCategories();
+		
 	}
+
+	hiddenField(field){
+		return(<input
+
+				className="form-control"
+				type="hidden"
+				{...field.input}
+				/>
+		)}
+
+	// timeField(field){
+	// return(<input
+
+	// 		className="form-control"
+	// 		type="hidden"
+	// 		{...field.input, field.input[value]: Date.now()}
+	// 		/>
+	// )}
 
 	renderField(field){
 
@@ -56,9 +75,8 @@ class PostsNew extends Component{
 
 onSubmit(values){
 	
-	this.props.createPost(values, ()=>{
-		this.props.history.push('/');
-	});
+	this.props.createPost({...values, id: uuid(), timestamp: Date.now()}, ()=>{
+		this.props.history.push('/')});
 }
 
 
@@ -68,8 +86,8 @@ onSubmit(values){
 			return <div>Page is loading</div>
 		}
 		// const   { handleSubmit } = this.props;
-
 		return(
+
 			<form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
 				<Field 
 				label="Title"
@@ -96,6 +114,18 @@ onSubmit(values){
 				component={this.renderField} 
 
 				/>
+
+		
+
+				<Field 
+				label="UUID"
+				name="uuid"
+				uuid={uuid()}
+				component={this.hiddenField} 
+
+				/>
+
+			
 
 				<button type="submit" className="btn btn-primary">Submit</button>
 				<Link to="/" className="btn btn-danger">Cancel</Link>

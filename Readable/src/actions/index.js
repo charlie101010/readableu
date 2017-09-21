@@ -45,7 +45,7 @@ export const setActiveCategory = (category)=> {
 	};
 }
 
-export const createPost = (post, callback) => {
+export const createPost = (values, callback) => {
 	const url = `${ROOT_URL}/posts`;
 	const request = axios.post(url, values, { headers: { 'Authorization': 'whatever-you-want' }}).then(()=>callback());
 	return{

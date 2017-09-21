@@ -31,7 +31,9 @@ class CategoryList extends Component{
 		return(
 		<div>
 			<h2> Click on a Category to Filter Posts </h2>
-			<div className="btn btn-primary" onClick={()=>this.handleClick(null)}>Show Posts from All Categories</div>
+			<div className="btn-toolbar">
+				<button className="btn btn-primary" onClick={()=>this.handleClick(null)}>Show Posts from All Categories</button>
+			</div>
 			<ul className='list-group col-sm-4'>
 		      	{this.renderList()}
 		      	{console.log("categories", this.props.categories)}	

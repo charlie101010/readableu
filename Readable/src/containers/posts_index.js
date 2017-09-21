@@ -22,12 +22,17 @@ class Posts extends Component{
 	render(){
 		if(this.props.activeCategory==null){
 			return(
+					<div>
+					<Link to='/posts/new' className='btn btn-primary'>Add a new Post</Link>
 					<ul className='list-group col-sm-8'>
 					{_.map(this.props.posts, (post=>{
 						return(
-							<li key={post.id} className="list-group-item"><Link to={`/posts/${post.id}`}>
-							{post.body} {post.voteScore}
-							</Link>
+						
+							<li key={post.id} className="list-group-item">
+								<Link to={`/posts/${post.id}`}>{post.body}</Link>
+								<h5>Vote Score</h5>
+								<p>{post.voteScore}</p>
+							
 							</li>
 							  )				
 
@@ -35,17 +40,23 @@ class Posts extends Component{
 					)}
 
 					</ul>
+				</div>
 				)
 		}
 
 
 
 		return(
-			
+			<div>
+			<Link to='/posts/new' className='btn btn-primary'>Add a new Post</Link>
 			<ul className='list-group col-sm-8'>
 				{_.values(this.props.posts).filter(post=>post.category == this.props.activeCategory.path).map(post=>{
 					return(
-						<li key={post.id} className="list-group-item">{post.body}</li>
+						<li key={post.id} className="list-group-item">
+								<Link to={`/posts/${post.id}`}>{post.body}</Link>
+								<h5>Vote Score</h5>
+								<p>{post.voteScore}</p>
+							</li>
 						  )
 
 					}
@@ -53,6 +64,7 @@ class Posts extends Component{
 		
 
 			</ul>
+			</div>
 
 
 

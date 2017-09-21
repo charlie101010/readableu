@@ -13,15 +13,11 @@ export default class App extends Component {
     return (
     <div>
     <Switch>
-     <Route path='/posts/new' render={() => (
-      <div>
-        <PostsNew />
-      </div>
+     <Route path='/posts/new' render={(props) => (
+        <PostsNew {...props}/>
       )}/>
      <Route path='/posts/:id' render={(props) => (
-    <div>
       <PostShow {...props}/>
-    </div>
     )}/>
     <Route exact path='/' render={() => (
     	<div>

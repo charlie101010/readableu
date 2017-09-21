@@ -26,15 +26,17 @@ class PostShow extends Component{
 	renderComments(){
 		return _.map(this.props.comments, comment=>{
 			return(
-				<li className="list-group-item" key={comment.id}>
-				<h2>{comment.body}</h2>
-				<h6> Author </h6>
-				<p>{comment.author}</p>
-				<h6>Comment VoteScore </h6>
-				<p>{comment.voteScore}</p>
-				<button onClick={()=>this.handleCommentVote(comment.id, 'upVote')} className='btn btn-primary btn-sm'>UpVote</button>
-				<button onClick={()=>this.handleCommentVote(comment.id,'downVote')} className='btn btn-default btn-sm'>DownVote</button>
-				</li>
+				<div>
+					<li className="list-group-item" key={comment.id}>
+						<h2>{comment.body}</h2>
+						<h6> Author </h6>
+						<p>{comment.author}</p>
+						<h6>Comment VoteScore </h6>
+						<p>{comment.voteScore}</p>
+					<button onClick={()=>this.handleCommentVote(comment.id, 'upVote')} className='btn btn-primary btn-sm'>UpVote</button>
+					<button onClick={()=>this.handleCommentVote(comment.id,'downVote')} className='btn btn-default btn-sm'>DownVote</button>
+					</li>
+				</div>
 
 				)
 		})
@@ -61,12 +63,15 @@ class PostShow extends Component{
 					<p>{this.props.post.timestamp}</p>
 					<h2> Vote Score </h2>
 					<p>{this.props.post.voteScore}</p>
+					<h2> ID </h2>
+					<p>{this.props.post.id}</p>
 					<div>
 						<button onClick={()=>this.handlePostVote('upVote')} className='btn btn-primary'>UpVote</button>
 						<button onClick={()=>this.handlePostVote('downVote')} className='btn btn-default'>DownVote</button>
 					</div>
 				</div>
 				<div>
+					<h2>Comments ({Object.keys(this.props.comments).length})</h2>
 					{this.renderComments()}
 				</div>
 			</div>
