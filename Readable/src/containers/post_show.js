@@ -24,12 +24,13 @@ class PostShow extends Component{
 	}
 
 
-
 	renderComments(){
-		return _.map(this.props.comments, comment=>{
+		const commentsArray = _.values(this.props.comments);
+		console.log(commentsArray)
+		return commentsArray.map(comment=>{
 			return(
 				<div>
-					<li key={comment.name} className="list-group-item">
+					<li key={comment.id} className="list-group-item">
 						<h2>{comment.body}</h2>
 						<h6> Author </h6>
 						<p>{comment.author}</p>
