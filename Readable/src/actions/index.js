@@ -58,8 +58,9 @@ export const createPost = (values, callback) => {
 }
 
 export const editPost = (values, callback) => {
-	const url = `${ROOT_URL}/posts`;
+	const url = `${ROOT_URL}/posts/${values.id}`;
 	const request = axios.put(url, values, { headers: { 'Authorization': 'whatever-you-want' }}).then(()=>callback());
+	console.log("cool compiler", request);
 	return{
 		type: EDIT_POST,
 		payload: request
@@ -124,7 +125,7 @@ export const deletePost = (id, callback) => {
 	}
 }
 
-export const createComment = (values, callback) => {
+export const createComment = (values) => {
 	const url = `${ROOT_URL}/comments`;
 	const request = axios.post(url, values, { headers: { 'Authorization': 'whatever-you-want' }});
 	console.log("comments", request)
