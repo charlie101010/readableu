@@ -13,6 +13,9 @@ export const INCREMENT_COMMENT_VOTE = 'INCREMENT_COMMENT_VOTE'
 export const DELETE_POST = 'DELETE_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const GET_COMMENT = 'GET_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const getCategories = ()=> {
 	const url = `${ROOT_URL}/categories`;
@@ -92,6 +95,30 @@ export const getComments= (id)=> {
 	};
 }
 
+export const getComment = (id)=> {
+	const url = `${ROOT_URL}/comments/${id}/`;
+	const request = axios.get(url, { headers: { 'Authorization': 'whatever-you-want' }});
+	console.log(request);
+
+	return{
+		type: GET_COMMENT,
+		payload: request
+
+	};
+}
+
+export const editComment = (values, callback) => {
+	const url = `${ROOT_URL}/comments/${values.id}`;
+	const request = axios.put(url, values, { headers: { 'Authorization': 'whatever-you-want' }}).then(()=>callback());
+	console.log("cool compiler", request);
+	return{
+		type: EDIT_COMMENT,
+		payload: request
+	}
+}
+
+
+
 export const incrementPostVote= (id, voteType)=> {
 	const url = `${ROOT_URL}/posts/${id}`;
 	const request = axios.post(url, {'option': voteType}, { headers: { 'Authorization': 'whatever-you-want' }});
@@ -122,6 +149,16 @@ export const deletePost = (id, callback) => {
 	return{
 		type: DELETE_POST,
 		payload: id
+	}
+}
+
+export const deleteComment = (id) => {
+	const url = `${ROOT_URL}/comments/${id}`;
+	const request = axios.delete(url, { headers: { 'Authorization': 'whatever-you-want' }});
+	console.log("horseclinden", request)
+	return{
+		type: DELETE_COMMENT,
+		payload: request
 	}
 }
 

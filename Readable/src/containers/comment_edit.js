@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { editPost, getPost} from '../actions/index';
+import { editComment, getComment} from '../actions/index';
 import uuid from 'uuid';
 
-class PostsEdit extends Component{
+class CommentsEdit extends Component{
 
 
 
 	componentDidMount(){
-		this.props.getPost(this.props.match.params.id);
+		this.props.getComment(this.props.match.params.id);
 		console.log("mad initial", this.props.initialValues)
 		
 		
@@ -45,12 +45,12 @@ class PostsEdit extends Component{
 
 
 
-onSubmit(values, callback){
+onSubmit(values){
 	
-	this.props.editPost(values, ()=>{
-		this.props.history.push(`/posts/${this.props.match.params.id}`);
+	this.props.editComment({...values, timestamp: Date.now()}, ()=>{
+		this.props.history.push(`/posts/${this.props.initialValues.parentId}`);
 	});
-};
+}
 
 
 
@@ -58,13 +58,6 @@ onSubmit(values, callback){
 		return(
 
 			<form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
-				<Field 
-				label="Title"
-				name="title"
-				component={this.renderField}
-			
-
-				/>
 				<Field 
 				label="Body"
 				name="body"
@@ -111,13 +104,13 @@ function validate(values){
 
 
 const mapStateToProps = (state, ownProps) => {
-	return {initialValues: state.posts[ownProps.match.params.id]}
+	return {initialValues: state.comments[ownProps.match.params.id]}
 }
 
 
-PostsEdit = reduxForm({
+CommentsEdit = reduxForm({
 	validate,
-	form: 'PostsEditForm'
-})(PostsEdit);
+	form: 'CommentsEditForm'
+})(CommentsEdit);
 
-export default connect(mapStateToProps, {editPost, getPost})(PostsEdit)
+export default connect(mapStateToProps, {editComment, getComment})(CommentsEdit)
