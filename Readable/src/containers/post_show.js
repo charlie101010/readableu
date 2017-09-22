@@ -24,10 +24,19 @@ class PostShow extends Component{
 	}
 
 
+
 	renderComments(){
-		const commentsArray = _.values(this.props.comments);
-		console.log(commentsArray)
-		return commentsArray.map(comment=>{
+		const commentsArray = _.values(this.props.comments)
+		const sortedComments = commentsArray.sort(function(a, b){
+			if(b.voteScore > a.voteScore){
+				return 1;
+			}
+			if(a.voteScore > b.voteScore){
+				return -1;
+			}
+		})
+		console.log("sorted", sortedComments)
+		return sortedComments.map(comment=>{
 			return(
 				<div>
 					<li key={comment.id} className="list-group-item">
