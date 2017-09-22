@@ -10,6 +10,8 @@ export const GET_POST = 'GET_POST'
 export const GET_COMMENTS = 'GET_COMMENTS'
 export const INCREMENT_POST_VOTE = 'INCREMENT_POST_VOTE'
 export const INCREMENT_COMMENT_VOTE = 'INCREMENT_COMMENT_VOTE'
+export const DELETE_POST = 'DELETE_POST'
+export const EDIT_POST = 'EDIT_POST'
 
 export const getCategories = ()=> {
 	const url = `${ROOT_URL}/categories`;
@@ -25,7 +27,7 @@ export const getCategories = ()=> {
 
 export const getPosts= ()=> {
 	const url = `${ROOT_URL}/posts`;
-	const request = axios.get(url, { headers: { 'Authorization': 'whatever-you-want' }});
+	const request = axios.get(url, { headers: { 'Authorization': 'whatever-you-want' }}).then();
 	console.log(request);
 
 	return{
@@ -54,10 +56,20 @@ export const createPost = (values, callback) => {
 	}
 }
 
-export const getPost= (id)=> {
+export const editPost = (values, callback) => {
+	const url = `${ROOT_URL}/posts`;
+	const request = axios.put(url, values, { headers: { 'Authorization': 'whatever-you-want' }}).then(()=>callback());
+	return{
+		type: EDIT_POST,
+		payload: request
+	}
+}
+
+export const getPost = (id)=> {
 	const url = `${ROOT_URL}/posts/${id}`;
 	const request = axios.get(url, { headers: { 'Authorization': 'whatever-you-want' }});
-	console.log(request);
+	console.log("post", request);
+	
 
 	return{
 		type: GET_POST,
@@ -100,4 +112,13 @@ export const incrementCommentVote= (id, voteType)=> {
 		payload: request
 
 	};
+}
+
+export const deletePost = (id, callback) => {
+	const url = `${ROOT_URL}/posts/${id}`;
+	const request = axios.delete(url, { headers: { 'Authorization': 'whatever-you-want' }}).then(()=>callback());
+	return{
+		type: DELETE_POST,
+		payload: id
+	}
 }

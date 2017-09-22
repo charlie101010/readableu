@@ -4,7 +4,7 @@ import Posts from '../containers/posts_index';
 import {Route, Switch} from 'react-router-dom';
 import PostsNew from '../containers/posts_new';
 import PostShow from '../containers/post_show';
-
+import PostsEdit from '../containers/post_edit';
 
 
 export default class App extends Component {
@@ -16,7 +16,10 @@ export default class App extends Component {
      <Route path='/posts/new' render={(props) => (
         <PostsNew {...props}/>
       )}/>
-     <Route path='/posts/:id' render={(props) => (
+    <Route path='/posts/:id/edit' render={(props) => (
+      <PostsEdit {...props}/>
+    )}/>
+     <Route exact path='/posts/:id' render={(props) => (
       <PostShow {...props}/>
     )}/>
     <Route exact path='/' render={() => (

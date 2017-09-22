@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getPost, getComments, incrementPostVote, incrementCommentVote} from '../actions';
+import {getPost, getComments, incrementPostVote, incrementCommentVote, deletePost} from '../actions';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
 
@@ -27,19 +27,24 @@ class PostShow extends Component{
 		return _.map(this.props.comments, comment=>{
 			return(
 				<div>
-					<li className="list-group-item" key={comment.id}>
+					<li key={comment.name} className="list-group-item">
 						<h2>{comment.body}</h2>
 						<h6> Author </h6>
 						<p>{comment.author}</p>
 						<h6>Comment VoteScore </h6>
 						<p>{comment.voteScore}</p>
-					<button onClick={()=>this.handleCommentVote(comment.id, 'upVote')} className='btn btn-primary btn-sm'>UpVote</button>
-					<button onClick={()=>this.handleCommentVote(comment.id,'downVote')} className='btn btn-default btn-sm'>DownVote</button>
+						<button onClick={()=>this.handleCommentVote(comment.id, 'upVote')} className='btn btn-primary btn-sm'>UpVote</button>
+						<button onClick={()=>this.handleCommentVote(comment.id,'downVote')} className='btn btn-default btn-sm'>DownVote</button>
 					</li>
 				</div>
 
 				)
 		})
+	}
+
+	onDeleteClick(){
+		this.props.deletePost(this.props.match.params.id, ()=>{this.props.history.push('/')});
+
 	}
 
 	
@@ -50,9 +55,17 @@ class PostShow extends Component{
 		}
 
 		return(
+
 			<div>
 				<div>
 				<Link to="/">Back to Index</Link>
+					<button className="btn btn-danger pull-xs-right"
+					onClick = {this.onDeleteClick.bind(this)}
+
+				>
+				Delete Post
+
+				</button>
 					<h2> Title </h2>
 					<p>{this.props.post.title}</p>
 					<h2> Body </h2>
@@ -85,4 +98,4 @@ function mapStateToProps(state, ownProps){
 	return {post: state.posts[ownProps.match.params.id], comments: state.comments};
 }
 
-export default connect(mapStateToProps, {getPost, getComments, incrementPostVote, incrementCommentVote})(PostShow);
+export default connect(mapStateToProps, {getPost, getComments, incrementPostVote, incrementCommentVote, deletePost})(PostShow);
