@@ -12,6 +12,7 @@ export const INCREMENT_POST_VOTE = 'INCREMENT_POST_VOTE'
 export const INCREMENT_COMMENT_VOTE = 'INCREMENT_COMMENT_VOTE'
 export const DELETE_POST = 'DELETE_POST'
 export const EDIT_POST = 'EDIT_POST'
+export const CREATE_COMMENT = 'CREATE_COMMENT'
 
 export const getCategories = ()=> {
 	const url = `${ROOT_URL}/categories`;
@@ -120,5 +121,15 @@ export const deletePost = (id, callback) => {
 	return{
 		type: DELETE_POST,
 		payload: id
+	}
+}
+
+export const createComment = (values, callback) => {
+	const url = `${ROOT_URL}/comments`;
+	const request = axios.post(url, values, { headers: { 'Authorization': 'whatever-you-want' }});
+	console.log("comments", request)
+	return{
+		type: CREATE_COMMENT,
+		payload: request
 	}
 }

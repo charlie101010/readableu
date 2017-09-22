@@ -1,25 +1,20 @@
 import React, {Component} from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, reset} from 'redux-form';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { editPost, getPost, getCategories} from '../actions/index';
+import { createComment } from '../actions/index';
 import uuid from 'uuid';
 
-class PostsEdit extends Component{
+class CommentsNew extends Component{
 
 
 
 	componentDidMount(){
-		this.props.getPost(this.props.match.params.id);
-		this.props.getCategories();
-		
-		
-		
+		console.log("nice props", this.props)
 	}
 
 
-
-	renderField(field, props){
+	renderField(field){
 
 		const className= `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`
 
@@ -31,7 +26,6 @@ class PostsEdit extends Component{
 				className="form-control"
 				type="text"
 					{...field.input}
-
 				/>
 				<div className="text-help">
 				{field.meta.touched ? field.meta.error : ''}
@@ -45,50 +39,33 @@ class PostsEdit extends Component{
 
 onSubmit(values){
 	
-	this.props.editPost({values}, ()=>{
-		this.props.history.push('/')});
-}
+	this.props.createComment({...values, id: uuid(), timestamp: Date.now(), parentId: this.props.postId});
+	this.props.dispatch(reset('CommentsNewForm'));
+	
+};
 
 
 
 	render(){
-		if(!this.props.initivalValues){
-			return <div>Page is loading</div>
-		}
-
 		// const   { handleSubmit } = this.props;
 		return(
 
 			<form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
-				<Field 
-				label="Title"
-				name="title"
-				component={this.renderField}
-			
-
-				/>
+				
 				<Field 
 				label="Body"
 				name="body"
 				component={this.renderField} 
 
 				/>
-				<Field
-
+				<Field 
 				label="Author"
 				name="author"
 				component={this.renderField} 
 
 				/>
-
-				<Field 
-				label="Category"
-				name="category"
-				component={this.renderField} 
-
-				/>
-
 			
+
 				<button type="submit" className="btn btn-primary">Submit</button>
 				<Link to="/" className="btn btn-danger">Cancel</Link>
 
@@ -117,19 +94,19 @@ function validate(values){
 
 	// If errors is empty, the form is fine to submit
 	// If errors has *any* properties, redux form assumes form is invalid
-	return errors;	
+	return errors;
 
 }
 
 
 
-const mapStateToProps = (state, ownProps) => {
-	return {categories: state.categories, initivalValues: state.posts[ownProps.match.params.id]}
+function mapStateToProps(state){
+	return {categories: state.categories}
 }
 
 export default reduxForm({
 	validate,
-	form: 'PostsEditForm'
+	form: 'CommentsNewForm'
 })(
-connect(mapStateToProps, {editPost, getPost, getCategories})(PostsEdit)
+connect(mapStateToProps, {createComment})(CommentsNew)
 );

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import CommentsNew from './comments_new'
 import {getPost, getComments, incrementPostVote, incrementCommentVote, deletePost} from '../actions';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
@@ -11,6 +12,7 @@ class PostShow extends Component{
 	componentDidMount(){
 		this.props.getPost(this.props.match.params.id);
 		this.props.getComments(this.props.match.params.id);
+		console.log("posty", this.props)
 	}
 
 	handlePostVote(voteType){
@@ -59,13 +61,18 @@ class PostShow extends Component{
 			<div>
 				<div>
 				<Link to="/">Back to Index</Link>
-					<button className="btn btn-danger pull-xs-right"
-					onClick = {this.onDeleteClick.bind(this)}
 
-				>
+				
+				<button className="btn btn-danger pull-xs-right"
+				onClick = {this.onDeleteClick.bind(this)}>
 				Delete Post
-
+				</button><Link to={`/posts/${this.props.match.params.id}/edit`}>
+				<button className="btn btn-primary pull-xs-right">
+				Edit Post
 				</button>
+				</Link>
+
+
 					<h2> Title </h2>
 					<p>{this.props.post.title}</p>
 					<h2> Body </h2>
@@ -85,6 +92,8 @@ class PostShow extends Component{
 				</div>
 				<div>
 					<h2>Comments ({Object.keys(this.props.comments).length})</h2>
+					<h3> New Comment </h3>
+					<CommentsNew postId={this.props.match.params.id}/>
 					{this.renderComments()}
 				</div>
 			</div>
