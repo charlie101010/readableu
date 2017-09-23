@@ -36,9 +36,7 @@ class CategoryList extends Component{
 			</div>
 			<ul className='list-group col-sm-4'>
 		      	{this.renderList()}
-		      	{console.log("categories", this.props.categories)}	
-		      	{console.log("ActiveCategory", this.props.activeCategory)}
-		      	{console.log("ActivePost", this.props.activePost)}
+		      
 		     </ul>
 		   	
 		</div>     

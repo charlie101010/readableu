@@ -18,6 +18,9 @@ class Posts extends Component{
 	}
 
 
+	sortList(){
+		$('ul#sort').append($('ul#sort').find('li').get().reverse());
+	}
 
 
 	render(){
@@ -39,16 +42,17 @@ class Posts extends Component{
 			return(
 					<div>
 					<Link to='/posts/new' className='btn btn-primary'>Add a new Post</Link>
-					<ul className='list-group col-sm-8'>
+					<button className="btn-primary btn" onClick={()=>this.sortList()}> Sort by Vote Score </button>
+					<ul className='list-group col-sm-8' id="sort">
 					{sortedPosts.map(post=>{
 						return(
-						
-							<li key={post.id} className="list-group-item">
-								<Link to={`/posts/${post.id}`}>{post.body}</Link>
-								<h5>Vote Score</h5>
-								<p>{post.voteScore}</p>
-							
-							</li>
+							<div key={post.id} className="post_summary">
+								<li  className="list-group-item">
+									<Link to={`/posts/${post.id}`}>{post.body}</Link>
+									<h5>Vote Score</h5>
+									<p>{post.voteScore}</p>
+								</li>
+							</div>
 							  )				
 
 							})
@@ -64,6 +68,7 @@ class Posts extends Component{
 		return(
 			<div>
 			<Link to='/posts/new' className='btn btn-primary'>Add a new Post</Link>
+			<button className="btn-primary btn" onClick={()=>this.sortList()}> Sort by Vote Score </button>
 			<ul className='list-group col-sm-8'>
 				{sortedPosts.filter(post=>post.category == this.props.activeCategory.path).map(post=>{
 					return(

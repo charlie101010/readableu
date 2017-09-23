@@ -23,14 +23,6 @@ class PostsNew extends Component{
 				/>
 		)}
 
-	// timeField(field){
-	// return(<input
-
-	// 		className="form-control"
-	// 		type="hidden"
-	// 		{...field.input, field.input[value]: Date.now()}
-	// 		/>
-	// )}
 
 	renderField(field){
 
@@ -53,26 +45,6 @@ class PostsNew extends Component{
 
 	}
 
-	// renderSelector(field){
-	// 	return(
-	// 		<div className="form-group">
-	// 			<label>{field.label}</label>
-	// 			<select
-
-	// 			className="form-control"
-	// 				{...field.input}
-	// 			>
-	// 			{this.props.categories.map(category=>(
-	// 				<option>{category.name}</option>))}
-	// 			</select>
-	// 			<div className="text-help">
-	// 			{field.meta.touched ? field.meta.error : ''}
-	// 			</div>
-	// 		</div>
-	// 		);
-
-	// }
-
 onSubmit(values){
 	
 	this.props.createPost({...values, id: uuid(), timestamp: Date.now()}, ()=>{
@@ -85,7 +57,6 @@ onSubmit(values){
 		if(!this.props.categories){
 			return <div>Page is loading</div>
 		}
-		// const   { handleSubmit } = this.props;
 		return(
 
 			<form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
